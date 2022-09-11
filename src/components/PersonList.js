@@ -11,25 +11,34 @@ export default class PersonList extends React.Component {
       "Content-type": 'application/json',
     }})
       .then(res => {
-        console.log("help");
+        
         const persons = res.data;
-        console.log("help");
+        
         this.setState({persons: persons})
-        console.log(persons);
+        //console.log(persons);
       })
   }
 
   render() {
     
     return (
-      <ul>
+      <ol>
         {
           this.state.persons
             .map(person =>
-              <li> {person.Brand} </li>
+              <li>
+                <ul> 
+                  <li>Review</li>
+                  <li> Brand: {person.Brand} </li> 
+                  <li>Variety: {person.Variety}</li> 
+                  <li>Style: {person.Style}</li> 
+                  <li>Country: {person.Country}</li> 
+                  <li>Stars: {person.Stars}</li> 
+                </ul>
+              </li>
             )
         }
-      </ul>
+      </ol>
     )
   }
 }

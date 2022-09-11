@@ -49,21 +49,21 @@ def add_setlist():
     #return(dictToReturn)
 
 # get setlist endpoint
-@app.route('/get/setlist/<reviewNum>', methods=["GET"])
-def get_setlist(reviewNum):
+@app.route('/get/setlist/<brand>', methods=["GET"])
+def get_setlist(brand):
     # from koble database's setlist collection, find document that has concert_id that matches concert_id from
     # the request's URL parameter
     # also do not return _id from document, or it will break endpoint
-    setlist = mycol.find({"Review #": reviewNum}, {"_id": False})
-    return {"setlist": list(setlist)}
+    setlist = mycol.find({"Brand": brand}, {"_id": False})
+    return list(setlist)
 
 @app.route('/get/listoften/', methods=["GET"])
 def get_ten():
     myresult = mycol.find({"$expr" :
-                               {"$lt" : [{"$toInt" :"$Review #"} , 10]}
+                               {"$gte" : [{"$toDouble" :"$Stars"} , 4]}
                            } ,
                           {"_id" : False}
-                          )
+                          ).limit(3)
     return list(myresult)
 
 app.run(port=5000)
